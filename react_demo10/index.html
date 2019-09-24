@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+            class LifeCycle extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.state = {
+                        person: {
+                            username: 'kobe',
+                            age: 39
+                        }
+                    }
+                    console.log('constructor()被调用, 生成实例对象');
+                }
+                // 组件将要被挂载
+                componentWillMount(){
+                    // console.log(this)// 实例对象;
+                    console.log('componentWillMount() 组件将要被挂载');
+                }
+                componentDidMount(){
+                    console.log('componentDidMount() 组件已经挂载完毕');
+                    setTimeout(() => {
+                        this.setState({
+                            person:{
+                                username:"newname",
+                                age:"1"
+                            }
+                        })
+                    }, 3000);
+                    setTimeout(() => {//10秒后移除组件
+                        ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+                    }, 10000);
+                }
+                // 组件将要被更新
+                componentWillUpdate(){
+                    console.log('componentWillUpdate() 组件将要被更新');
+                }
+                // 组件更新完毕
+                componentDidUpdate(){
+                    console.log('componentDidUpdate() 组件更新完毕');
+                }
+                // 组件将要被卸载
+                componentWillUnmount(){
+                    console.log('componentWillUnmount() 组件将要被卸载');
+                }
+
+
+                render(){
+                    console.log('render()');
+                    let {person} = this.state;
+                    return (
+                        <div>
+                            <p>姓名： {person.username}----年龄：{person.age}</p>
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(
+                <LifeCycle />, 
+                document.getElementById('root'));
+        </script>
+                <!-- 
+                    react组件的三种状态：
+                        Mounting：已插入真实 DOM
+                        Updating：正在被重新渲染
+                        Unmounting：已移出真实 DOM
+                    React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。  
+                        componentWillMount()
+                        componentDidMount()
+                        componentWillUpdate(object nextProps, object nextState)
+                        componentDidUpdate(object prevProps, object prevState)
+                        componentWillUnmount()  
+                    此外，React 还提供两种特殊状态的处理函数。
+                        componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
+                        shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用    
+
+                    注意：
+                    ReactDOM.unmountComponentAtNode方法移除一个已经加载到DOM中的React组件，并清除对应的事件处理器和状态。
+                    组件生成实例只会被初始化一下即：constructor方法执行一次，componentWillMount也只执行一次，
+                    render()方法，在componentWillMount执行一次，之后每次调用componentWillUpdate后就会执行一次render()方法
+
+                -->
+
+</body>
+
+</html>

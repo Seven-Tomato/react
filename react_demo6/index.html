@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>react获取真实dom</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+     <div id="root"></div>
+        <script type="text/babel">
+                class MyComponent extends React.Component{
+                    constructor(props){
+                          super(props)//当在constructor中访问实例的props时需要在super()中传递props
+                          this.myInput = React.createRef()
+                          this.handleClick = this.hhhandleClick.bind(this)
+                    }
+                    hhhandleClick (){
+                        this.myInput.current.focus()
+                    }
+                    render(){
+                        return <div>
+                                   <input type="text" ref = {this.myInput}/>
+                                   <input type="button" value = "点击获取第一个input的焦点" onClick = {this.handleClick}/>
+                               </div>
+                    }
+                }
+
+                ReactDOM.render(
+                    <MyComponent/>,
+                    document.getElementById("root")
+                )
+        </script>
+        <!-- 
+             组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。
+             只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 DOM diff ，它可以极大提高网页的性能表现。
+
+             使用React.createRef()方法在构造函数中创建一个ref实例，并赋值给this.myInput
+             在 render() 方法内部，将构造函数中创建的ref实例,传递给 ref属性
+             该ref的current属性就能拿到真实dom节点或组件的实例
+
+             注意：如果使用ES6的Class extends写法 onClick绑定一个方法 需要bind(this) this指向当前实例化的组件（对象）
+             如果不限绑定this可以使用箭头函数的写法
+        -->
+         
+</body>
+</html>

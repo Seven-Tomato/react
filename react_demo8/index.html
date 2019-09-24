@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this.state显示组件状态，e.target.value获取表单内的值</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+     <div id="root"></div>
+        <script type="text/babel">
+            class InputChange extends React.Component{
+                constructor(){
+                    super()
+                    this.state = {
+                        msg:"hellow!"
+                    }
+                    this.onchange = this.handleOnChange.bind(this)
+                }
+                handleOnChange(e){
+                    this.setState({msg:e.target.value})
+                }
+                render(){
+                    var value = this.state.msg
+                    return  <div>
+                                <input type="text" value = {value} onChange = {this.onchange}/>
+                                <p>{value}</p>
+                            </div>
+                }
+            }
+
+            ReactDOM.render(
+                <InputChange/>,
+                document.getElementById("root")
+            )
+        </script>
+        <!-- 
+             创建一个实时监控用户输入数据的组件 ,使用event.target.value获得用户输入的值。 textarea 元素、select元素、radio元素都属于这种情况
+             注意：render方法的 return 后面没内容就会报错如下
+             return      
+                    <div>
+                     <input type="text" value = {value} onChange = {this.onchange}/>
+                     <p>{value}</p>
+                    </div>
+             解决方法：return后面加上（） ，或者将内容写在return后
+              return（      
+                    <div>
+                       <input type="text" value = {value} onChange = {this.onchange}/>
+                       <p>{value}</p>
+                    </div>  
+                    ） 
+
+             return <div>
+                       <input type="text" value = {value} onChange = {this.onchange}/>
+                       <p>{value}</p>
+                     </div>  
+        -->
+         
+</body>
+</html>

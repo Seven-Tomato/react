@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>propTypes来验证组件接收的数据类型</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <script src="../js/prop-types.js"></script>
+</head>
+<body>
+     <div id="root"></div>
+        <script type="text/babel">
+                var dataMsg = 123;
+                class MyMsg extends React.Component{
+                    render(){
+                        return <h1>{this.props.msg}</h1>
+                    }                  
+                    static propTypes = {
+                        msg:PropTypes.string
+                    }
+                }
+                    
+                ReactDOM.render(
+                    <MyMsg msg={dataMsg}></MyMsg>,
+                    document.getElementById('root')
+                );
+        </script>
+        <!-- 注意：自 React v15.5 起，React.PropTypes 已移入另一个包中。请使用 prop-types 库 代替。
+            
+             React 内置了一些类型检查的功能。要在组件的 props 上进行类型检查，你只需配置特定的 propTypes 属性：
+
+             组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求
+             
+             上面组件MyMsg有一个msg属性，propTypes告诉react，这个msg属性接受的数据是字符串类型，而这里msg接收的数据类型为number,就会在页面报错。
+        -->
+         
+</body>
+</html>

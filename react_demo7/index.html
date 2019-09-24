@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this.state显示组件状态</title>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+     <div id="root"></div>
+        <script type="text/babel">
+           class ChangeMsg extends React.Component{
+               constructor () {
+                   super()
+                   this.state = {
+                       like:false
+                   }
+                   this.onclick = this.handleClick.bind(this)
+               }
+               handleClick(){
+                   this.setState({like:!this.state.like})
+               }
+               render(){
+                   var newstate = this.state.like?"😍":"不喜欢"
+                   return <div>
+                             <p>你{newstate}她！</p>
+                             <button onClick = {this.onclick}>你确认？</button>
+                         </div>
+               }
+           }
+           ReactDOM.render(
+               <ChangeMsg/>,
+               document.getElementById("root")
+           )
+               
+        </script>
+        <!-- 
+             组件免不了要与用户互动，React 的一大创新，就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI
+
+             this.setState() 方法用来修改状态值，构造函数是唯一可以给 this.state 赋值的地方
+
+             由于 this.props 和 this.state 都用于描述组件的特性，可能会产生混淆。
+             一个简单的区分方法是，this.props 表示那些一旦定义，就不再改变的特性，
+             而 this.state 是会随着用户互动而产生变化的特性。
+        -->
+         
+</body>
+</html>
